@@ -18,15 +18,17 @@ app.post('/webhook', (req, res) => {
     console.log(req.body);
     
     if (req.body.object === 'page') {
+
         
         req.body.entry.forEach((entry) => {
+
+            console.log(`[ENTRY-id] ${entry.id}`);
             // this contains message
-            entry.messaging.forEach((message) => {
-                console.log(`[MSG-id] ${message.id}`);
-                console.log(`[MSG-text] ${message.test}`);
+            entry.messaging.forEach((msg) => {
+                console.log(`[MSG-text] ${msg.message.text}`);
             });
         });
-        
+
         res.status(200).send('EVENT_RECEIVED');
     
     } else {
