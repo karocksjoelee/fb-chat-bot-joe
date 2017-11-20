@@ -15,14 +15,18 @@ app.get('', (req, res) => {
 
 // Check this is an Event from a page subscription (Webhook End-Point)
 app.post('/webhook', (req, res) => {
+    console.log(req.body);
     
     if (req.body.object === 'page') {
         
         req.body.entry.forEach((entry) => {
             // this contains message
-            let webhookEvent = entry.messaging[0];
-            console.log(`[MSG] ${webhookEvent.message}`);
+            entry.messaging.forEach((message) => {
+                console.log(`[MSG-id] ${message.id}`);
+                console.log(`[MSG-text] ${message.test}`);
+            });
         });
+        
         res.status(200).send('EVENT_RECEIVED');
     
     } else {
