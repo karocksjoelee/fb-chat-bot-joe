@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const app = express().use(bodyParser.json());
 const VERIFY_TOKEN = 'joeschatbot2017'
 
-app.listen(process.env.PORT || 1337, () => {
+app.listen(process.env.VCAP_APP_PORT || 1337, () => {
     console.log('[EXPRESS] WEBHOOK LISTENING ...');
 });
 
