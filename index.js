@@ -4,7 +4,7 @@ const app = express().use(bodyParser.json());
 const VERIFY_TOKEN = 'joeschatbot2017'
 
 app.listen(process.env.PORT || 1337, () => {
-    console.log('Webhook is listening');
+    console.log('[EXPRESS] WEBHOOK LISTENING ...');
 });
 
 
@@ -16,11 +16,12 @@ app.post('/webhook', (req, res) => {
         req.body.entry.forEach((entry) => {
             // this contains message
             let webhookEvent = entry.messaging[0];
-            console.log(webhookEvent);
+            console.log(`[MSG] ${webhookEvent.message}`);
         });
-
         res.status(200).send('EVENT_RECEIVED');
+    
     } else {
+        console.log('[POST] 404')
         res.status(404).send('ERR_404');
     }
 
@@ -39,11 +40,12 @@ app.get('/webhook', (req, res) => {
 
         // Check the mode and token sent is correct
         if (mode === 'subscribe' && token === VERIFY_TOKEN) {
-            console.log('WEBHOOK_VERIFIED');
+            console.log('[GET] WEBHOOK_VERIFIED');
             // Respond with the challenge token form the request
             res.status(200).send(challenge);
         } else {
             // 403 Forbidden
+            console.log('[GET] 404')
             res.sendStatus(403);
         }
     }
