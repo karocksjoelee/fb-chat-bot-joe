@@ -1,0 +1,5 @@
+---
+applications:
+ - name: FB_CHAT_BOT
+   random-route: true
+   memory: 256M
