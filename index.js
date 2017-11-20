@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express().use(bodyParser.json());
 const VERIFY_TOKEN = 'joeschatbot2017'
+const fbController = require('./facebook.controller');
 
 app.listen(process.env.VCAP_APP_PORT || 1337, () => {
     console.log('[EXPRESS] WEBHOOK LISTENING ...');
@@ -15,18 +16,20 @@ app.get('', (req, res) => {
 
 // Check this is an Event from a page subscription (Webhook End-Point)
 app.post('/webhook', (req, res) => {
-    console.log(req.body);
     
     if (req.body.object === 'page') {
 
-        
         req.body.entry.forEach((entry) => {
-
+            console.log('------------ENTRY-----------');
             console.log(`[ENTRY-id] ${entry.id}`);
             // this contains message
             entry.messaging.forEach((msg) => {
+                console.log('------------MSG-----------');
                 console.log(`[MSG-text] ${msg.message.text}`);
+                fbController.sendTextMessage(msg.sender.id, `BlueMix Node ECHO : ${msg.message.text}`);
             });
+
+            
         });
 
         res.status(200).send('EVENT_RECEIVED');
