@@ -8,6 +8,11 @@ app.listen(process.env.PORT || 1337, () => {
 });
 
 
+app.get('', (req, res) => {
+    res.status(200).send('WEBHOOK IS LISTENING');
+});
+
+
 // Check this is an Event from a page subscription (Webhook End-Point)
 app.post('/webhook', (req, res) => {
     
